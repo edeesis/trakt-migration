@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 
-const shows = []
+const shows = [
+  "The Office"
+]
 
 function App() {
   const clientId = localStorage.getItem("CLIENT_ID");
@@ -30,10 +32,15 @@ function App() {
           const accessToken = data["access_token"];
           localStorage.setItem("ACCESS_TOKEN", accessToken);
           setToken(accessToken)
-          fetchUser();
         }
       );
   }
+
+  useEffect(() => {
+    if (token) {
+      fetchUser();
+    }
+  })
 
   function fetchUser() {
     const url = "https://api.trakt.tv/users/me"
